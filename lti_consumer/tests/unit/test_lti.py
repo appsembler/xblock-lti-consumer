@@ -168,6 +168,9 @@ class TestLtiConsumer(TestLtiConsumerXBlock):
             u'custom_component_graceperiod': str(self.lti_consumer.xblock.graceperiod.total_seconds()),
             'lis_person_sourcedid': 'edx',
             'lis_person_contact_email_primary': 'edx@example.com',
+            'lis_person_name_given': 'First',
+            'lis_person_name_family': 'Last',
+            'lis_person_name_full': 'First Last',
             'launch_presentation_locale': 'en',
             u'custom_param_1': 'custom1',
             u'custom_param_2': 'custom2',
@@ -179,8 +182,12 @@ class TestLtiConsumer(TestLtiConsumerXBlock):
             'oauth_signature': u'fake_signature'
         }
         self.lti_consumer.xblock.has_score = True
+        self.lti_consumer.xblock.ask_permission_to_send = False
         self.lti_consumer.xblock.ask_to_send_username = True
         self.lti_consumer.xblock.ask_to_send_email = True
+        self.lti_consumer.xblock.ask_to_send_first_name = True
+        self.lti_consumer.xblock.ask_to_send_last_name = True
+        self.lti_consumer.xblock.ask_to_send_full_name = True
         self.lti_consumer.xblock.runtime.get_real_user.return_value = Mock(
             email='edx@example.com',
             username='edx',
@@ -193,6 +200,9 @@ class TestLtiConsumer(TestLtiConsumerXBlock):
         self.lti_consumer.xblock.runtime.get_real_user.return_value = {}
         del expected_lti_parameters['lis_person_sourcedid']
         del expected_lti_parameters['lis_person_contact_email_primary']
+        del expected_lti_parameters['lis_person_name_given']
+        del expected_lti_parameters['lis_person_name_family']
+        del expected_lti_parameters['lis_person_name_full']
         del expected_lti_parameters['launch_presentation_locale']
         self.assertEqual(self.lti_consumer.get_signed_lti_parameters(), expected_lti_parameters)
 
