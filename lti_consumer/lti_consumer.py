@@ -408,7 +408,6 @@ class LtiConsumerXBlock(StudioEditableXBlockMixin, XBlock):
     # user action.
     ask_permission_to_send = Boolean(
         display_name=_("Enable permission pop-up"),
-        # Translators: This is used to request the user's username for a third party service.
         help=_("Select True to show pop-up asking user to allow information sharing when launched in new window."),
         default=True,
         scope=Scope.settings
