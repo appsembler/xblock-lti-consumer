@@ -452,7 +452,10 @@ class LtiConsumerXBlock(StudioEditableXBlockMixin, XBlock):
         context_id is an opaque identifier that uniquely identifies the context (e.g., a course)
         that contains the link being launched.
         """
-        return unicode(self.course_id)  # pylint: disable=no-member
+        if self.course.is_microsoft_course:
+            return unicode(re.sub('\:.*?\+', ':Microsoft+', self.course_id))
+        else:
+            return unicode(self.course_id)  # pylint: disable=no-member
 
     @property
     def role(self):
