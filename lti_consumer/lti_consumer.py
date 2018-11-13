@@ -453,7 +453,7 @@ class LtiConsumerXBlock(StudioEditableXBlockMixin, XBlock):
         that contains the link being launched.
         """
         if self.course.is_microsoft_course:
-            return re.sub('\:.*?\+', ':Microsoft+', unicode(self.course_id))
+            return unicode(re.sub('\:.*?\+', ':Microsoft+', self.course_id))
         else:
             return unicode(self.course_id)  # pylint: disable=no-member
 
