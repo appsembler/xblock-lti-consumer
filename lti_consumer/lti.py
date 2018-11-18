@@ -12,6 +12,8 @@ import json
 from .exceptions import LtiError
 from .oauth import get_oauth_request_signature, verify_oauth_body_signature
 
+from .utils import get_cohort, get_team
+
 
 log = logging.getLogger(__name__)
 
@@ -129,6 +131,7 @@ class LtiConsumer(object):
 
             u'context_id': self.xblock.context_id,
             u'custom_component_display_name': self.xblock.display_name,
+            u'custom_user_id': None,
         }
 
         if self.xblock.due:
@@ -143,7 +146,15 @@ class LtiConsumer(object):
 
         self.xblock.user_email = ""
         self.xblock.user_username = ""
+        self.xblock.user_full_name = ""
         self.xblock.user_language = ""
+
+        self.xblock.cohort_id = None
+        self.xblock.cohort_name = None
+        self.xblock.team_id = None
+        self.xblock.team_name = None
+
+        self.xblock.real_user_id = ""
 
         # Username, email, and language can't be sent in studio mode, because the user object is not defined.
         # To test functionality test in LMS
@@ -152,7 +163,20 @@ class LtiConsumer(object):
             real_user_object = self.xblock.runtime.get_real_user(self.xblock.runtime.anonymous_student_id)
             self.xblock.user_email = getattr(real_user_object, "email", "")
             self.xblock.user_username = getattr(real_user_object, "username", "")
+            self.xblock.user_full_name = real_user_object.profile.name
+            names_list = self.xblock.user_full_name.split(' ', 1)
             user_preferences = getattr(real_user_object, "preferences", None)
+            self.xblock.real_user_id = getattr(real_user_object, "id", "")
+
+            self.xblock.cohort_id, self.xblock.cohort_name = get_cohort(
+                course_key=self.xblock.context_id,
+                user=real_user_object,
+            )
+
+            self.xblock.team_id, self.xblock.team_name = get_team(
+                course_key=self.xblock.context_id,
+                user=real_user_object,
+            )
 
             if user_preferences is not None:
                 language_preference = user_preferences.filter(key='pref-lang')
@@ -163,8 +187,24 @@ class LtiConsumer(object):
             lti_parameters["lis_person_sourcedid"] = self.xblock.user_username
         if self.xblock.ask_to_send_email and self.xblock.user_email:
             lti_parameters["lis_person_contact_email_primary"] = self.xblock.user_email
+        if self.xblock.ask_to_send_first_name and self.xblock.user_full_name:
+            lti_parameters["lis_person_name_given"] = names_list[0]
+        if self.xblock.ask_to_send_last_name and self.xblock.user_full_name:
+            try:
+                lti_parameters["lis_person_name_family"] = names_list[1]
+            except IndexError:
+                lti_parameters["lis_person_name_family"] = ''
+        if self.xblock.ask_to_send_full_name and self.xblock.user_full_name:
+            lti_parameters["lis_person_name_full"] = self.xblock.user_full_name
         if self.xblock.user_language:
             lti_parameters["launch_presentation_locale"] = self.xblock.user_language
+
+        lti_parameters["custom_cohort_id"] = self.xblock.cohort_id
+        lti_parameters["custom_cohort_name"] = self.xblock.cohort_name
+        lti_parameters["custom_team_id"] = self.xblock.team_id
+        lti_parameters["custom_team_name"] = self.xblock.team_name
+
+        lti_parameters["custom_user_id"] = unicode(self.xblock.real_user_id)
 
         # Appending custom parameter for signing.
         lti_parameters.update(self.xblock.prefixed_custom_parameters)
