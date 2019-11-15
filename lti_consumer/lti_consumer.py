@@ -34,7 +34,7 @@ What is supported:
 2.) Multiple LTI components on a single page.
 3.) The use of multiple LTI providers per course.
 4.) Use of advanced LTI component that provides back a grade.
-    A) LTI 1.1.1 XML endpoint
+    A) This branches targets an LTI 1.1 endpoint, not a LTI 1.1.1 XML endpoint
         a.) The LTI provider sends back a grade to a specified URL.
         b.) Currently only action "update" is supported. "Read", and "delete"
             actions initially weren't required.

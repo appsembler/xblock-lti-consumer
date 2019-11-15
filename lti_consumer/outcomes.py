@@ -38,7 +38,7 @@ def parse_grade_xml_body(body):
             if the XML is missing required entities
             if there was a problem parsing the XML body
     """
-    lti_spec_namespace = "http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0"
+    lti_spec_namespace = "http://www.imsglobal.org/lis/oms1p0/pox"  # use LTI 1.1 not 1.1.1
     namespaces = {'def': lti_spec_namespace}
     data = body.strip()
 

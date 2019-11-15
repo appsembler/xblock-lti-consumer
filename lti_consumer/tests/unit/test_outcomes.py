@@ -18,7 +18,7 @@ from lti_consumer.exceptions import LtiError
 
 REQUEST_BODY_TEMPLATE_VALID = textwrap.dedent("""
     <?xml version="1.0" encoding="UTF-8"?>
-    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/lis/oms1p0/pox">
       <imsx_POXHeader>
         <imsx_POXRequestHeaderInfo>
           <imsx_version>V1.0</imsx_version>
@@ -45,7 +45,7 @@ REQUEST_BODY_TEMPLATE_VALID = textwrap.dedent("""
 
 REQUEST_BODY_TEMPLATE_MISSING_MSG_ID = textwrap.dedent("""
     <?xml version="1.0" encoding="UTF-8"?>
-    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/lis/oms1p0/pox">
       <imsx_POXHeader>
         <imsx_POXRequestHeaderInfo>
           <imsx_version>V1.0</imsx_version>
@@ -56,7 +56,7 @@ REQUEST_BODY_TEMPLATE_MISSING_MSG_ID = textwrap.dedent("""
 
 REQUEST_BODY_TEMPLATE_MISSING_SOURCED_ID = textwrap.dedent("""
     <?xml version="1.0" encoding="UTF-8"?>
-    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/lis/oms1p0/pox">
       <imsx_POXHeader>
         <imsx_POXRequestHeaderInfo>
           <imsx_version>V1.0</imsx_version>
@@ -76,7 +76,7 @@ REQUEST_BODY_TEMPLATE_MISSING_SOURCED_ID = textwrap.dedent("""
 
 REQUEST_BODY_TEMPLATE_MISSING_BODY = textwrap.dedent("""
     <?xml version="1.0" encoding="UTF-8"?>
-    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/lis/oms1p0/pox">
       <imsx_POXHeader>
         <imsx_POXRequestHeaderInfo>
           <imsx_version>V1.0</imsx_version>
@@ -88,7 +88,7 @@ REQUEST_BODY_TEMPLATE_MISSING_BODY = textwrap.dedent("""
 
 REQUEST_BODY_TEMPLATE_MISSING_ACTION = textwrap.dedent("""
     <?xml version="1.0" encoding="UTF-8"?>
-    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/lis/oms1p0/pox">
       <imsx_POXHeader>
         <imsx_POXRequestHeaderInfo>
           <imsx_version>V1.0</imsx_version>
@@ -102,7 +102,7 @@ REQUEST_BODY_TEMPLATE_MISSING_ACTION = textwrap.dedent("""
 
 REQUEST_BODY_TEMPLATE_MISSING_SCORE = textwrap.dedent("""
     <?xml version="1.0" encoding="UTF-8"?>
-    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+    <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/lis/oms1p0/pox">
       <imsx_POXHeader>
         <imsx_POXRequestHeaderInfo>
           <imsx_version>V1.0</imsx_version>
@@ -135,7 +135,7 @@ REQUEST_TEMPLATE_DEFAULTS = {
 
 RESPONSE_BODY_TEMPLATE = textwrap.dedent("""
     <?xml version="1.0" encoding="UTF-8"?>
-    <imsx_POXEnvelopeResponse xmlns = "http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+    <imsx_POXEnvelopeResponse xmlns = "http://www.imsglobal.org/lis/oms1p0/pox">
         <imsx_POXHeader>
             <imsx_POXResponseHeaderInfo>
                 <imsx_version>V1.0</imsx_version>
@@ -296,7 +296,7 @@ class TestParseGradeXmlBody(unittest.TestCase):
         """
         request_body_template = textwrap.dedent("""
             <?xml version="1.0" encoding="UTF-8"?>
-            <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/services/ltiv1p1/xsd/imsoms_v1p0">
+            <imsx_POXEnvelopeRequest xmlns="http://www.imsglobal.org/lis/oms1p0/pox">
               <imsx_POXHeader>
                 <imsx_POXRequestHeaderInfo>
                   <imsx_version>V1.0</imsx_version>
